@@ -1,0 +1,33 @@
+# Build
+/build/
+/*/build/
+/.gradle/
+local.properties
+
+# Gradle Wrapper
+!gradle/wrapper/gradle-wrapper.jar
+
+# Android NDK & Native
+.cxx/
+.externalNativeBuild/
+captures/
+
+# Android Studio / IntelliJ
+.idea/
+.idea/*
+*.iml
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Output files
+*.apk
+*.ap_
+*.dex
+*.class
+*.log
+
+# Jetpack Compose
+.compose-cache/
+.navigation/
