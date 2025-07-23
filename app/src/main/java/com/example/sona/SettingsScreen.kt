@@ -72,7 +72,7 @@ fun SettingsScreen(navController: NavController) {
 
             Column (modifier = Modifier.fillMaxSize().padding(start = 30.dp).padding(30.dp)) {
 
-                Text("Settings", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
+                Text("Settings", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold, color = Color.White)
 
                 Spacer(modifier = Modifier.height(40.dp))
 
@@ -126,18 +126,18 @@ fun AboutSettings() {
 
     Column (modifier = Modifier.fillMaxHeight()) {
 
-        Text("Sona is an app that controls Spotify Playback without the need of Spotify Web API")
+        Text("Sona is an app that controls Spotify Playback without the need of Spotify Web API", color = Color.White)
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        Text("Made By Emir Dilekci - GitHub: github.com/supertost")
+        Text("Made By Emir Dilekci - GitHub: github.com/supertost", color = Color.White)
     }
 
 }
 
 @Composable
 fun AppearanceSettings() {
-    Text("Not yet implemented")
+    Text("Not yet implemented", color = Color.White)
 }
 
 @Composable

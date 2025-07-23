@@ -60,7 +60,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 
 @Composable
-fun PlayerScreen(navController: NavController) {
+fun PlayerScreen(navController: NavController, isPlaying: Boolean) {
 
     val context = LocalContext.current
     val controller = remember { SpotifySessionController(context) }
@@ -69,7 +69,7 @@ fun PlayerScreen(navController: NavController) {
     val artist = controller.artist ?: "No Artist Information Available"
     val albumArt = controller.albumArt
 
-    val isPlaying = controller.isPlaying
+    //val isPlaying = controller.isPlaying
 
     val albumArtScale by animateFloatAsState(
         targetValue = if (isPlaying) 1f else 0.8f,

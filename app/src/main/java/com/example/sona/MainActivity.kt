@@ -15,8 +15,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.sona.ui.theme.SpotiControlTheme
@@ -45,9 +47,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
+
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun SpotiControl() {
+
+    val context = LocalContext.current
+    val controller = remember { SpotifySessionController(context) }
+    val isPlaying = controller.isPlaying
 
     val navController = rememberNavController()
 
@@ -59,7 +67,7 @@ fun SpotiControl() {
             popEnterTransition = { fadeIn() + slideInHorizontally(initialOffsetX = { -it }) },
             popExitTransition = { fadeOut() + slideOutHorizontally(targetOffsetX = { it }) }) {
 
-            composable (route = "player") { PlayerScreen(navController) }
+            composable (route = "player") { PlayerScreen(navController, isPlaying) }
 
             composable (route = "settings") { SettingsScreen(navController) }
 
