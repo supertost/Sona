@@ -53,9 +53,13 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun SpotiControl() {
 
+
     val context = LocalContext.current
     val controller = remember { SpotifySessionController(context) }
     val isPlaying = controller.isPlaying
+
+    val versionName = context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "Unknown"
+
 
     val navController = rememberNavController()
 
@@ -69,7 +73,7 @@ fun SpotiControl() {
 
             composable (route = "player") { PlayerScreen(navController, isPlaying) }
 
-            composable (route = "settings") { SettingsScreen(navController) }
+            composable (route = "settings") { SettingsScreen(navController, versionName) }
 
         }
 

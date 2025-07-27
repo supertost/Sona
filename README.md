@@ -4,7 +4,7 @@
   <img src="https://github.com/supertost/Sona/blob/main/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.webp" alt="App Icon" width="130"/>
 </p>
 
-<p align="center">A Spotify media controller built with Kotlin and Jetpack Compose for Android Devices that does not need the Spotify Web API to work.</p>
+<p align="center">A Spotify media controller built with Kotlin and Jetpack Compose for Android devices that does not need the Spotify Web API to work.</p>
 
 ---
 
@@ -12,7 +12,8 @@
 
 - Play/Pause music playing on Spotify
 - Skip or go to the previous song
-- Open Spotify to add the playing song to your like list, add new songs to queue, or change what's playing
+- A button on the bottom-left to open Spotify and add the playing song to your like list, add new songs to queue, or change what's playing
+- A button on the bottom-right corner to refresh the content in case it does not update automatically
 
 It works nicely with Spotify Connect, allowing you to listen to your music from other devices while controlling playback from this app.
 
@@ -32,9 +33,20 @@ It works nicely with Spotify Connect, allowing you to listen to your music from 
 
 ## Installation
 
+> The APK file isn’t available in the releases tab — I’m still deciding whether to release it on Google Play or here under the Releases tab. If I choose to release it on GitHub, the installation steps will look like the ones below.
+
 1. Download the APK file from the Releases tab and install it on your Android Device
 
 2. After installing, allow notification access from the settings page as shown in the video below
 
 <video src="https://github.com/user-attachments/assets/3535b32a-fb3e-45a5-a024-3285ef26f339" alt="no exclusion video"></video>
 
+---
+
+This app is not affiliated with or endorsed by Spotify in any way.
+
+It is a small project I made to get familiar with Kotlin and Jetpack Compose
+
+Sona does not use the Spotify Web API, it reads the song metadata from Android's media session and notification system.
+
+The album artwork shown in the demo videos belongs to the respective artists. I do not claim ownership.

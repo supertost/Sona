@@ -319,7 +319,6 @@ fun openSpotify(context: Context) {
     if (launchIntent != null) {
         context.startActivity(launchIntent)
     } else {
-        // Fallback: Open in browser if Spotify not installed
         val webIntent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse("https://open.spotify.com/")
         }

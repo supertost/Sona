@@ -27,7 +27,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,11 +39,17 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 
 @Composable
-fun SettingsScreen(navController: NavController) {
+fun SettingsScreen(navController: NavController, versionName: String) {
 
     val darkColors = darkColorScheme(
         background = Color.Black,
@@ -51,7 +60,7 @@ fun SettingsScreen(navController: NavController) {
         onPrimary = Color.White
     )
 
-    var selectedTab by remember { mutableStateOf("General") }
+    var selectedTab by remember { mutableStateOf("About") }
 
     MaterialTheme(colorScheme = darkColors) {
 
@@ -80,7 +89,7 @@ fun SettingsScreen(navController: NavController) {
 
                     Column (modifier = Modifier.fillMaxHeight().width(200.dp).padding(end = 20.dp)) {
 
-                        listOf("General", "Appearance", "About").forEach { tab ->
+                        listOf("About", "Permissions","Appearance").forEach { tab ->
                             Button(onClick = { selectedTab = tab }, modifier = Modifier.fillMaxWidth().padding(vertical = 0.dp), colors = ButtonDefaults.buttonColors(containerColor = if (selectedTab == tab) Color.DarkGray.copy(alpha = 0.5f) else Color.Transparent, contentColor = Color.White), shape = RoundedCornerShape(10.dp)) {
                                 Text(tab)
                             }
@@ -95,9 +104,9 @@ fun SettingsScreen(navController: NavController) {
                             .padding(end = 100.dp)
                     ) {
                         when (selectedTab) {
-                            "General" -> GeneralSettings()
+                            "About" -> AboutSettings(versionName)
+                            "Permissions" -> PermissionSettings()
                             "Appearance" -> AppearanceSettings()
-                            "About" -> AboutSettings()
                         }
                     }
 
@@ -122,16 +131,71 @@ fun SettingsScreen(navController: NavController) {
 }
 
 @Composable
-fun AboutSettings() {
+fun AboutSettings(versionName: String) {
 
-    Column (modifier = Modifier.fillMaxHeight()) {
+    Column (modifier = Modifier.fillMaxHeight().verticalScroll(rememberScrollState())) {
 
-        Text("Sona is an app that controls Spotify Playback without the need of Spotify Web API", color = Color.White)
+        Row (modifier = Modifier.fillMaxWidth()) {
 
-        Spacer(modifier = Modifier.height(40.dp))
+            Image(
+                painter = painterResource(id = R.drawable.sona_icon),
+                contentDescription = "App Icon",
+                modifier = Modifier
+                    .height(100.dp)
+                    .padding(end = 20.dp)
+            )
 
-        Text("Made By Emir Dilekci - GitHub: github.com/supertost", color = Color.White)
+            Column {
+
+                Text("Sona", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, color = Color.White)
+
+                Text("Sona is an app that controls Spotify playback without the need for the Spotify Web API", color = Color.White)
+
+                Spacer(modifier = Modifier.height(40.dp))
+            }
+
+        }
+
+        val uriHandler = LocalUriHandler.current
+
+        val annotatedText = buildAnnotatedString {
+            append("Made By Emir Dilekci - GitHub: ")
+
+            pushStringAnnotation(
+                tag = "URL",
+                annotation = "https://github.com/supertost"
+            )
+            withStyle(style = SpanStyle(
+                color = Color.Cyan,
+                textDecoration = TextDecoration.Underline
+            )
+            ) {
+                append("github.com/supertost")
+            }
+            pop()
+        }
+
+        ClickableText(
+            text = annotatedText,
+            style = MaterialTheme.typography.bodyLarge.copy(color = Color.White),
+            onClick = { offset ->
+                annotatedText.getStringAnnotations(tag = "URL", start = offset, end = offset)
+                    .firstOrNull()?.let { annotation ->
+                        uriHandler.openUri(annotation.item)
+                    }
+            }
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text("This app isn't affiliated with or endorsed by Spotify in any way.", color = Color.White)
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Text("Version: $versionName", color = Color.White)
+
     }
+
 
 }
 
@@ -141,7 +205,7 @@ fun AppearanceSettings() {
 }
 
 @Composable
-fun GeneralSettings() {
+fun PermissionSettings() {
     val context = LocalContext.current
 
     Button(onClick = {
