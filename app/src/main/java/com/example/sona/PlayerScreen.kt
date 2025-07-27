@@ -38,6 +38,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -89,6 +90,8 @@ fun PlayerScreen(navController: NavController, isPlaying: Boolean) {
         onPrimary = Color.White
     )
 
+    val albumArtTemp = remember { mutableStateOf(albumArt) }
+
 
     LaunchedEffect(Unit) {
         while (true) {
@@ -112,9 +115,13 @@ fun PlayerScreen(navController: NavController, isPlaying: Boolean) {
 
         Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
 
-            if (albumArt != null) {
+            if (albumArtTemp.value != null) {
+
+                if (albumArt != null) {
+                    albumArtTemp.value = albumArt
+                }
                 Image(
-                    bitmap = albumArt.asImageBitmap(),
+                    bitmap = albumArtTemp.value!!.asImageBitmap(),
                     contentDescription = "Album Art",
                     modifier = Modifier.fillMaxSize().blur(90.dp),
                     contentScale = ContentScale.Crop
@@ -122,7 +129,7 @@ fun PlayerScreen(navController: NavController, isPlaying: Boolean) {
             }
             else {
                 Image(
-                    painter = painterResource(id = R.drawable.placeholdderalbumart),
+                    painter = painterResource(id = R.drawable.placeholderalbumart),
                     contentDescription = "Album Art",
                     modifier = Modifier.fillMaxSize().blur(90.dp),
                     contentScale = ContentScale.Crop
@@ -139,9 +146,14 @@ fun PlayerScreen(navController: NavController, isPlaying: Boolean) {
                         contentAlignment = Alignment.Center
                     ) {
 
-                        if (albumArt != null) {
+                        val albumArtBitmap =
+                        if (albumArtTemp.value != null) {
+
+                            if (albumArt != null) {
+                                albumArtTemp.value = albumArt
+                            }
                             Image(
-                                bitmap = albumArt.asImageBitmap(), contentDescription = "Album Art",
+                                bitmap = albumArtTemp.value!!.asImageBitmap(), contentDescription = "Album Art",
                                 modifier = Modifier
                                     .fillMaxHeight()
                                     .aspectRatio(1f)
@@ -155,7 +167,7 @@ fun PlayerScreen(navController: NavController, isPlaying: Boolean) {
                         }
                         else {
                             Image(
-                                painter = painterResource(id = R.drawable.placeholdderalbumart),
+                                painter = painterResource(id = R.drawable.placeholderalbumart),
                                 contentDescription = "Album Art",
                                 modifier = Modifier
                                     .fillMaxHeight()
