@@ -119,7 +119,7 @@ fun SettingsScreen(navController: NavController, versionName: String) {
 
             Button(
                 modifier = Modifier.align(Alignment.TopEnd).padding(30.dp),
-                onClick = { navController.navigate("player") },
+                onClick = { navController.navigate("player"){popUpTo("player"){inclusive = true}} },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Black.copy(alpha = 0.5f),
                     contentColor = Color.Unspecified

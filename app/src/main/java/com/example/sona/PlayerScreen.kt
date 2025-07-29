@@ -272,7 +272,7 @@ fun PlayerScreen(navController: NavController, isPlaying: Boolean) {
 
                 Button(
                     modifier = Modifier.align(Alignment.TopEnd),
-                    onClick = { navController.navigate("settings") },
+                    onClick = { navController.navigate("settings"){popUpTo("player"){inclusive = false}} },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent,
                         contentColor = Color.Unspecified
@@ -286,7 +286,7 @@ fun PlayerScreen(navController: NavController, isPlaying: Boolean) {
 
                 Button(
                     modifier = Modifier.align(Alignment.BottomEnd),
-                    onClick = { navController.navigate("player") },
+                    onClick = { navController.navigate("player") {popUpTo("player"){inclusive = true}} },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent,
                         contentColor = Color.Unspecified
